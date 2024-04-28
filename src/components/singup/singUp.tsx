@@ -32,14 +32,14 @@ const SingUp = () => {
                     register(data).then(r => console.log(r))
                 }}>
                 {({errors}) => (
-                    <Form>
-                        <Field type={'email'} name={'email'} placeholder="Email"/>
-                        <Field type={'text'} name={'username'} placeholder="Login"/>
-                        <Field type={'password'} name={'password'} placeholder="Password"/>
-                        <Field type={'password'} name={'confirmPassword'} placeholder="Confirm Password"/>
+                    <Form className={styles.form}>
+                        <h2 className={styles.title}>Создать аккаунт Lorby</h2>
+                        <Field className={styles.input} type={'email'} name={'email'} placeholder="Email"/>
+                        <Field className={styles.input} type={'text'} name={'username'} placeholder="Login"/>
+                        <Field className={styles.input} type={'password'} name={'password'} placeholder="Password"/>
+                        <Field className={styles.input} type={'password'} name={'confirmPassword'} placeholder="Confirm Password"/>
                         <button type={'submit'}>Submit</button>
                         {errors.email && <p>email</p>}
-                        <button type={'submit'}>Send</button>
                     </Form>
                 )}
             </Formik>

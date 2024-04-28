@@ -4,3 +4,26 @@
     gap: 15rem;
     padding: 4rem 0;
 }
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 35rem;
+    margin: 0 auto;
+}
+
+.title{
+    font-weight: 500;
+    font-size: 3.2rem;
+    line-height: 4.7rem;
+    text-align: center;
+}
+
+.input{
+    background-color: #F8F8F8;
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: .5rem;
+}
