@@ -1,6 +1,0 @@
-.content{
-    display: grid;
-    grid-template-rows: 3rem 1fr;
-    gap: 15rem;
-    padding: 4rem 0;
-}
