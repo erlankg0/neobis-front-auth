@@ -21,6 +21,7 @@ const InputPassword: React.FC<IInput> = ({ name, placeholder }) => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 name={name}
                 placeholder={placeholder}
+                required
             />
             <div className={styles.toggleButton} onClick={togglePasswordVisibility}>
                 {showPassword ? (

@@ -3,5 +3,5 @@ export interface IInput {
     name: string,
     value: string,
     placeholder: string,
-    onChange: () => void,
+    onChange: (event: string) => void,
 }

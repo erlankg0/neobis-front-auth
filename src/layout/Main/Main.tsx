@@ -1,6 +1,6 @@
 import styles from "./main.module.css";
 import Intro from "../../components/intro/intro.tsx";
-import SingUp from "../../components/singup/singUp.tsx";
+import Registration from "../Registration/Registration.tsx";
 
 const Main = () => {
     return (
@@ -8,7 +8,7 @@ const Main = () => {
             <div className={'container'}>
                 <div className={styles.content}>
                     <Intro/>
-                    <SingUp/>
+                    <Registration/>
                 </div>
             </div>
         </main>
