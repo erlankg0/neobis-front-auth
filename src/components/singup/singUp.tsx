@@ -3,6 +3,9 @@ import styles from './singup.module.css'
 import {Formik, Form, Field} from "formik";
 import * as Yup from 'yup';
 import {register} from "../../API/network.ts";
+import Input from "../input/input.tsx";
+import InputPassword from "../inputPassword/inputPassword.tsx";
+import Button from "../button/button.tsx";
 
 const SingUp = () => {
 
@@ -34,11 +37,11 @@ const SingUp = () => {
                 {({errors}) => (
                     <Form className={styles.form}>
                         <h2 className={styles.title}>Создать аккаунт Lorby</h2>
-                        <Field className={styles.input} type={'email'} name={'email'} placeholder="Email"/>
-                        <Field className={styles.input} type={'text'} name={'username'} placeholder="Login"/>
-                        <Field className={styles.input} type={'password'} name={'password'} placeholder="Password"/>
-                        <Field className={styles.input} type={'password'} name={'confirmPassword'} placeholder="Confirm Password"/>
-                        <button type={'submit'}>Submit</button>
+                        <Field as={Input} type={'email'} name={'email'} placeholder="Email"/>
+                        <Field as={Input} type={'text'} name={'username'} placeholder="Login"/>
+                        <Field as={InputPassword} type={'password'} name={'password'} placeholder="Password"/>
+                        <Field as={InputPassword} type={'password'} name={'confirmPassword'} placeholder="Confirm Password"/>
+                        <Button text={'Войти'}/>
                         {errors.email && <p>email</p>}
                     </Form>
                 )}

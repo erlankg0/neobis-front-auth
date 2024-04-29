@@ -1,8 +1,8 @@
-import axios, {AxiosResponse} from "axios";
-import {IRegister} from "./register.ts";
+import axios from "axios";
+import {IRegister, IRegisterResponse, RegisterStatus} from "./register.ts";
 
 const instance = axios.create({
-    baseURL: 'https://https//reliable-courage-neoauth.up.railway.app/api/auth',
+    baseURL: 'https://reliable-courage-neoauth.up.railway.app/api/auth', // Исправленный URL
     headers: {
         Accept: '*/*',
         "Content-Type": 'application/json'
@@ -10,7 +10,8 @@ const instance = axios.create({
 })
 
 
-const register = (data: IRegister): Promise<AxiosResponse> => {
+
+const register = (data: IRegister): Promise<IRegisterResponse<RegisterStatus>> => {
     return instance.post('/register', data)
 }
 
