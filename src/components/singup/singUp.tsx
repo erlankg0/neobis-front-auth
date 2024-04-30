@@ -6,7 +6,7 @@ import InputPassword from "../inputPassword/inputPassword.tsx";
 import Button from "../button/button.tsx";
 import React, {useState} from "react";
 import {ISingUp, IValid} from "./singup.ts";
-import {redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {register} from "../../API/network.ts";
 
 const SingUp: React.FC<ISingUp> = ({
@@ -20,7 +20,6 @@ const SingUp: React.FC<ISingUp> = ({
                                        handleSetUserName,
                                        validatePassword,
                                    }) => {
-    const [isSubmit, setSubmit] = useState<boolean>(false);
     const [passwordValid, setPasswordValid] = useState<IValid>({
         validLength: false,
         hasLowercase: false,
@@ -29,10 +28,10 @@ const SingUp: React.FC<ISingUp> = ({
         hasUppercase: false
     });
     const [status, setStatus] = useState<number>();
+    const navigate = useNavigate();
     if (status == 201) {
-        redirect('/email');
+        navigate('/email')
     }
-    console.log(passwordValid)
 
     return (
         <section className={styles.content}>
@@ -50,23 +49,18 @@ const SingUp: React.FC<ISingUp> = ({
                         alert('Па')
                     }
                     const data = {
-                        email: values.email,
-                        username: values.username,
-                        password: values.password,
-                        confirmPassword: values.confirmPassword
+                        email: email,
+                        username: username,
+                        password: password,
+                        confirmPassword: confirmPassword
                     }
 
-                    register(data).then(response => setStatus(response.status));
+                    register(data).then((response) => setStatus(response.status)).catch((e) => console.log(e));
                 }}
             >
                 {() => (
                     <Form className={styles.form} onChange={() => {
                         setPasswordValid(validatePassword(password));
-                        if (password == confirmPassword) {
-                            setSubmit(true)
-                        } else {
-                            setSubmit(false)
-                        }
                     }}>
                         <h2 className={styles.title}>Создать аккаунт Lorby</h2>
                         <Field as={Input} type={'email'} value={email} onChange={handleSetEmail} name={'email'}
@@ -107,7 +101,7 @@ const SingUp: React.FC<ISingUp> = ({
                                 <li className={styles.validationItem}>Минимум 1 спецсимвол (!, ", #, $...)</li>
                             </ul>
                         )}
-                        <Button disabled={isSubmit} text={'Войти'}/>
+                        <Button text={'Войти'}/>
                     </Form>
                 )}
             </Formik>

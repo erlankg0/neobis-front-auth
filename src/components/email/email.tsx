@@ -1,12 +1,12 @@
 import styles from './email.module.css';
-import React, {useState} from "react";
-import {IEmail} from "./emailInterface.ts";
+import {useState} from "react";
 import Prev from "../prev/prev.tsx";
 import Modal from "../modal/modal.tsx";
+import {useAppSelector} from "../../redux/hooks.ts";
 
-
-const Email: React.FC<IEmail> = ({email}) => {
+const Email = () => {
     const [active, setActive] = useState<boolean>(false)
+    const email = useAppSelector(state => state.singUp.email);
     console.log(active)
     return (
         <div className={styles.content}>

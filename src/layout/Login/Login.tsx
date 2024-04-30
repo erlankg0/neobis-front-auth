@@ -6,12 +6,24 @@ import styles from "./login.module.css";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {setPassword, setLogin} from './../../redux/reducer/singin.ts';
 import {NavLink} from "react-router-dom";
+import {singIn} from "../../API/network.ts";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-const Login = () => {
+interface ILogin {
+    setSuccess: (success: boolean) => void;
+}
+
+const Login: React.FC<ILogin> = ({setSuccess}) => {
     const dispatch = useAddDispatch();
     const login = useAppSelector(state => state.singIn.login);
     const password = useAppSelector(state => state.singIn.password);
-
+    const [status, setStatus] = useState<number>();
+    const navigate = useNavigate();
+    if (status == 200) {
+        navigate('/success')
+        setSuccess(true);
+    }
 
     const handleSetPassword = (password: string) => {
         dispatch(setPassword(password));
@@ -28,8 +40,8 @@ const Login = () => {
                 login: login,
                 password: password,
             }}
-            onSubmit={(values) => {
-                console.log(values)
+            onSubmit={() => {
+                singIn(login, password).then(r => setStatus(r.status))
             }}
         >
             {() => (
@@ -53,7 +65,7 @@ const Login = () => {
                             onChange={handleSetPassword}
                         />
                     </div>
-                    <Button disabled={false} text={'Войти'}/>
+                    <Button text={'Войти'}/>
                     <NavLink to={'/register'} className={styles.register}>У меня еще нет аккаунта</NavLink>
                 </Form>
             )}

@@ -4,17 +4,21 @@ import Intro from "../../components/intro/intro.tsx";
 import Registration from "../Registration/Registration.tsx";
 import styles from './app.module.css'
 import Email from "../../components/email/email.tsx";
+import {useState} from "react";
+import Success from "../Success/sucess..tsx";
 
 function App() {
+    const [success, setSuccess] = useState<boolean>()
     return (
         <main>
             <div className={'container'}>
                 <div className={styles.content}>
-                    <Intro/>
+                    {!success && <Intro/>}
                     <Routes>
-                        <Route path={'/'} element={<Login/>}/>
+                        <Route path={'/'} element={<Login setSuccess={setSuccess}/>}/>
                         <Route path={'/register'} element={<Registration/>}/>
-                        <Route path={'/email'} element={<Email email={'era.ab.02@gmail.com'}/>}/>
+                        <Route path={'/email'} element={<Email/>}/>
+                        <Route path={'/success'} element={<Success/>}/>
                     </Routes>
                 </div>
             </div>

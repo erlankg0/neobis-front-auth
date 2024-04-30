@@ -3,6 +3,7 @@ import React from "react";
 import {IModal} from "./modalInterface.ts";
 import './modal.module.css'
 import Button from "../button/button.tsx";
+import {reSendEmail} from "../../API/network.ts";
 
 const Modal: React.FC<IModal> = ({active, setActive, email}) => {
     return (
@@ -14,7 +15,10 @@ const Modal: React.FC<IModal> = ({active, setActive, email}) => {
                 <h2 className={styles.title}>Мы выслали еще одно письмо на указанную тобой почту {email}</h2>
                 <p className={styles.paragraph}>Не забудь проверить
                     ящик “Спам”!11!!!!</p>
-                <Button onClick={()=> setActive(false)} disabled={false} text={'Понятно!!1!'}/>
+                <Button onClick={() => {
+                    setActive(false)
+                    reSendEmail(email).then(r => console.log(r))
+                }} text={'Понятно!!1!'}/>
             </div>
         </div>
     )

@@ -6,13 +6,29 @@ const instance = axios.create({
     headers: {
         Accept: '*/*',
         "Content-Type": 'application/json'
-    }
+    },
+    adapter: ["xhr", "http"],
 })
 
 
-
 const register = (data: IRegister): Promise<IRegisterResponse<RegisterStatus>> => {
+    console.log(data)
     return instance.post('/register', data)
 }
 
-export {register};
+const reSendEmail = (email: string) => {
+    const data = {
+        email
+    }
+    return instance.post('/resend-email', data)
+}
+
+const singIn = (login: string, password: string) => {
+    const data = {
+        login,
+        password,
+    }
+
+    return instance.post('/login', data)
+}
+export {register, reSendEmail, singIn};
