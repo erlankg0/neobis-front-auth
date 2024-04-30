@@ -1,8 +1,10 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import singSlice from './reducer/singup.ts';
+import singUpSlice from './reducer/singup.ts';
+import singInSlice from './reducer/singin.ts';
 
 const rootReducer = combineReducers({
-    singUp: singSlice
+    singUp: singUpSlice,
+    singIn: singInSlice,
 })
 
 const store = configureStore({
