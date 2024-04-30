@@ -5,6 +5,7 @@ import Button from "../../components/button/button.tsx";
 import styles from "./login.module.css";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {setPassword, setLogin} from './../../redux/reducer/singin.ts';
+import {NavLink} from "react-router-dom";
 
 const Login = () => {
     const dispatch = useAddDispatch();
@@ -53,7 +54,7 @@ const Login = () => {
                         />
                     </div>
                     <Button disabled={false} text={'Войти'}/>
-                    <h3 className={styles.create}>У меня еще нет аккаунта</h3>
+                    <NavLink to={'/register'} className={styles.register}>У меня еще нет аккаунта</NavLink>
                 </Form>
             )}
         </Formik>

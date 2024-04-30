@@ -1,0 +1,37 @@
+.content {
+    display: grid;
+    grid-template-rows: 3rem 1fr;
+    gap: 15rem;
+    padding: 4rem 0;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    align-content: center;
+    margin: 0 auto;
+    max-width: 35rem;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 3.6rem;
+    text-align: center;
+}
+
+.paragraph {
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 3rem;
+    text-align: center;
+}
+
+.email {
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    text-align: center;
+    cursor: pointer;
+}

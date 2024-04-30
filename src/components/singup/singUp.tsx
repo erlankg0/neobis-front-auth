@@ -6,6 +6,8 @@ import InputPassword from "../inputPassword/inputPassword.tsx";
 import Button from "../button/button.tsx";
 import React, {useState} from "react";
 import {ISingUp, IValid} from "./singup.ts";
+import {redirect} from "react-router-dom";
+import {register} from "../../API/network.ts";
 
 const SingUp: React.FC<ISingUp> = ({
                                        email,
@@ -26,7 +28,10 @@ const SingUp: React.FC<ISingUp> = ({
         hasSpecialChar: false,
         hasUppercase: false
     });
-
+    const [status, setStatus] = useState<number>();
+    if (status == 201) {
+        redirect('/email');
+    }
     console.log(passwordValid)
 
     return (
@@ -51,7 +56,7 @@ const SingUp: React.FC<ISingUp> = ({
                         confirmPassword: values.confirmPassword
                     }
 
-                    console.log(JSON.stringify(data, null))
+                    register(data).then(response => setStatus(response.status));
                 }}
             >
                 {() => (

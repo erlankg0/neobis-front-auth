@@ -22,10 +22,12 @@
     gap: 3rem;
 }
 
-.create{
+.register{
     font-weight: 500;
     font-size: 1.6rem;
     line-height: 2.4rem;
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
+    color: #212121;
 }
