@@ -5,10 +5,6 @@ interface ISingUp {
     username: string;
     password: string;
     confirmPassword: string;
-    emailValid: boolean,
-    usernameValid: boolean,
-    passwordValid: boolean,
-    confirmPasswordValid: boolean
 }
 
 
@@ -17,12 +13,9 @@ const initialState: ISingUp = {
     username: '',
     password: '',
     confirmPassword: '',
-    emailValid: false,
-    usernameValid: false,
-    passwordValid: false,
-    confirmPasswordValid: false
-
 }
+
+
 
 const singUpSlice = createSlice({
     name: 'singUp',

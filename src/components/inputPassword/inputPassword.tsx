@@ -4,8 +4,7 @@ import styles from './inputPassword.module.css';
 import visible from './../../assets/icon/visible.svg';
 import unvisible from './../../assets/icon/unvisible.svg';
 
-const InputPassword: React.FC<IInput> = ({ name, placeholder }) => {
-    const [password, setPassword] = useState<string>('');
+const InputPassword: React.FC<IInput> = ({ value, placeholder, onChange }) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const togglePasswordVisibility = () => {
@@ -17,9 +16,8 @@ const InputPassword: React.FC<IInput> = ({ name, placeholder }) => {
             <input
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                name={name}
+                value={value}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
                 placeholder={placeholder}
                 required
             />

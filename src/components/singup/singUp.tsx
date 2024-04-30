@@ -1,12 +1,11 @@
 import Prev from "../prev/prev.tsx";
 import styles from './singup.module.css'
 import {Field, Form, Formik} from "formik";
-import * as Yup from 'yup';
 import Input from "../input/input.tsx";
 import InputPassword from "../inputPassword/inputPassword.tsx";
 import Button from "../button/button.tsx";
-import React from "react";
-import {ISingUp} from "./singup.ts";
+import React, {useState} from "react";
+import {ISingUp, IValid} from "./singup.ts";
 
 const SingUp: React.FC<ISingUp> = ({
                                        email,
@@ -16,8 +15,19 @@ const SingUp: React.FC<ISingUp> = ({
                                        handleSetConfirmPassword,
                                        handleSetPassword,
                                        handleSetEmail,
-                                       handleSetUserName
+                                       handleSetUserName,
+                                       validatePassword,
                                    }) => {
+    const [isSubmit, setSubmit] = useState<boolean>(false);
+    const [passwordValid, setPasswordValid] = useState<IValid>({
+        validLength: false,
+        hasLowercase: false,
+        hasNumber: false,
+        hasSpecialChar: false,
+        hasUppercase: false
+    });
+
+    console.log(passwordValid)
 
     return (
         <section className={styles.content}>
@@ -29,37 +39,70 @@ const SingUp: React.FC<ISingUp> = ({
                     password: password,
                     confirmPassword: confirmPassword,
                 }}
-                validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Э-почта').required('Объязательное поле'),
-                    username: Yup.string().uppercase('Строчные и прописные буквы').lowercase('Строчные и прописные буквы'),
-                    password: Yup.string().min(8, 'От 8 до 15 символов').max(15, 'От 8 до 15 символов'),
-                    confirmPassword: Yup.string().min(8, 'От 8 до 15 символов').max(15, 'От 8 до 15 символов')
-                })}
+
                 onSubmit={values => {
+                    if (!(values.password == values.confirmPassword)) {
+                        alert('Па')
+                    }
                     const data = {
                         email: values.email,
                         username: values.username,
                         password: values.password,
                         confirmPassword: values.confirmPassword
                     }
+
                     console.log(JSON.stringify(data, null))
                 }}
             >
                 {() => (
-                    <Form className={styles.form}>
+                    <Form className={styles.form} onChange={() => {
+                        setPasswordValid(validatePassword(password));
+                        if (password == confirmPassword) {
+                            setSubmit(true)
+                        } else {
+                            setSubmit(false)
+                        }
+                    }}>
                         <h2 className={styles.title}>Создать аккаунт Lorby</h2>
-                        <Field as={Input} type={'email'} value={email} onChange={handleSetEmail} name={'email'} placeholder="Email"/>
-                        <Field as={Input} type={'text'} value={username} onChange={handleSetUserName} name={'username'} placeholder="Login"/>
-                        <Field as={InputPassword} type={'password'} value={password} onChange={handleSetPassword} name={'password'} placeholder="Password"/>
-                        <Field as={InputPassword} type={'password'} value={confirmPassword} onChange={handleSetConfirmPassword} name={'confirmPassword'}
-                               placeholder="Confirm Password"/>
-                        <ul className={styles.validationList}>
-                            <li>От 8 до 15 символов</li>
-                            <li>Строчные и прописные буквы</li>
-                            <li>Минимум 1 цифра</li>
-                            <li>Минимум 1 спецсимвол (!, ", #, $...)</li>
-                        </ul>
-                        <Button text={'Войти'}/>
+                        <Field as={Input} type={'email'} value={email} onChange={handleSetEmail} name={'email'}
+                               placeholder="Email"/>
+                        <Field as={Input} type={'text'} value={username} onChange={handleSetUserName} name={'username'}
+                               placeholder="Login"/>
+                        <Field as={InputPassword} type={'password'} value={password} onChange={handleSetPassword}
+                               name={'password'} placeholder="Password"/>
+                        <Field as={InputPassword} type={'password'} value={confirmPassword}
+                               onChange={handleSetConfirmPassword} name={'confirmPassword'}
+                               placeholder="Confirm Password"
+                        />
+                        {password ? (
+                            <ul className={styles.validationList}>
+                                <li className={styles.validationItem}
+                                    style={{color: passwordValid.validLength ? 'green' : 'red'}}>
+                                    От 8 до 15 символов {passwordValid.validLength ? '✅' : '❌'}
+                                </li>
+                                <li className={styles.validationItem}
+                                    style={{color: passwordValid.hasUppercase && passwordValid.hasLowercase ? 'green' : 'red'}}>
+                                    Строчные и прописные
+                                    буквы {passwordValid.hasUppercase && passwordValid.hasLowercase ? '✅' : '❌'}
+                                </li>
+                                <li className={styles.validationItem}
+                                    style={{color: passwordValid.hasNumber ? 'green' : 'red'}}>
+                                    Минимум 1 цифра {passwordValid.hasNumber ? '✅' : '❌'}
+                                </li>
+                                <li className={styles.validationItem}
+                                    style={{color: passwordValid.hasSpecialChar ? 'green' : 'red'}}>
+                                    Минимум 1 спецсимвол (!, ", #, $...) {passwordValid.hasSpecialChar ? '✅' : '❌'}
+                                </li>
+                            </ul>
+                        ) : (
+                            <ul className={styles.validationList}>
+                                <li className={styles.validationItem}>От 8 до 15 символов</li>
+                                <li className={styles.validationItem}>Строчные и прописные буквы</li>
+                                <li className={styles.validationItem}>Минимум 1 цифра</li>
+                                <li className={styles.validationItem}>Минимум 1 спецсимвол (!, ", #, $...)</li>
+                            </ul>
+                        )}
+                        <Button disabled={isSubmit} text={'Войти'}/>
                     </Form>
                 )}
             </Formik>
