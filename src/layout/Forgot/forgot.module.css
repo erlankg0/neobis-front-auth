@@ -1,0 +1,23 @@
+.content{
+    display: grid;
+    grid-template-rows: 3rem 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    width: 100%;
+    max-width: 38rem;
+}
+
+.title{
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 4.3rem;
+}

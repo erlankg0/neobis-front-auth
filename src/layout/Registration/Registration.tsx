@@ -1,5 +1,5 @@
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {setEmail, setPassword, setUserName, setConfirmPassword} from "../../redux/reducer/singup.ts";
+import {setConfirmPassword, setEmail, setPassword, setUserName} from "../../redux/reducer/singup.ts";
 import SingUp from "../../components/singup/singUp.tsx";
 
 const Registration = () => {
@@ -27,17 +27,19 @@ const Registration = () => {
         dispatch(setConfirmPassword(confirmPassword));
     }
 
-    const validatePassword = (password: string) => {
-        return {
-            validLength: password.length >= 8 && password.length <= 15,
-            hasLowercase: /[a-z]/.test(password),
-            hasUppercase: /[A-Z]/.test(password),
-            hasNumber: /\d/.test(password),
-            hasSpecialChar: /[!@#$%^&*]/.test(password),
-        };
-    };
 
-    return (<SingUp validatePassword={validatePassword} email={email} confirmPassword={confirmPassword} password={password} username={username}
+
+    // const validatePassword = (password: string) => {
+    //     return {
+    //         validLength: password.length >= 8 && password.length <= 15,
+    //         hasLowercase: /[a-z]/.test(password),
+    //         hasUppercase: /[A-Z]/.test(password),
+    //         hasNumber: /\d/.test(password),
+    //         hasSpecialChar: /[!@#$%^&*]/.test(password),
+    //     };
+    // };
+
+    return (<SingUp  email={email} confirmPassword={confirmPassword} password={password} username={username}
                     handleSetEmail={handleSetEmail} handleSetPassword={handleSetPassword}
                     handleSetUserName={handleSetUserName} handleSetConfirmPassword={handleSetConfirmPassword}/>)
 

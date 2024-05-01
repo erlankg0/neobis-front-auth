@@ -73,6 +73,7 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                             onChange={handleSetPassword}
                         />
                     </div>
+                    <NavLink className={styles.forgot} to={'/forgot'}>Забыл пароль</NavLink>
                     <Button text={'Войти'}/>
                     <NavLink to={'/register'} className={styles.register}>У меня еще нет аккаунта</NavLink>
                 </Form>

@@ -1,9 +1,8 @@
 export interface IValid{
     validLength: boolean,
-    hasLowercase: boolean,
-    hasUppercase: boolean,
-    hasNumber: boolean,
-    hasSpecialChar: boolean,
+    containsLetter: boolean,
+    containsNumber: boolean,
+    containsSymbol: boolean,
 }
 export interface ISingUp {
     email: string,
@@ -14,6 +13,5 @@ export interface ISingUp {
     handleSetUserName: (username: string) => void,
     handleSetPassword: (password: string) => void,
     handleSetConfirmPassword: (password: string) => void,
-    validatePassword: (password: string)=> IValid,
 }
 

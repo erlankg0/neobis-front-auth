@@ -4,7 +4,7 @@ import {Field, Form, Formik} from "formik";
 import Input from "../input/input.tsx";
 import InputPassword from "../inputPassword/inputPassword.tsx";
 import Button from "../button/button.tsx";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {ISingUp, IValid} from "./singup.ts";
 import {useNavigate} from "react-router-dom";
 import {register} from "../../API/network.ts";
@@ -18,20 +18,30 @@ const SingUp: React.FC<ISingUp> = ({
                                        handleSetPassword,
                                        handleSetEmail,
                                        handleSetUserName,
-                                       validatePassword,
+
                                    }) => {
     const [passwordValid, setPasswordValid] = useState<IValid>({
         validLength: false,
-        hasLowercase: false,
-        hasNumber: false,
-        hasSpecialChar: false,
-        hasUppercase: false
+        containsLetter: false,
+        containsNumber: false,
+        containsSymbol: false,
     });
     const [status, setStatus] = useState<number>();
     const navigate = useNavigate();
     if (status == 201) {
         navigate('/email')
     }
+
+    const validatePassword = useMemo(() => {
+        return ((password: string) => {
+            return {
+                validLength: password.length >= 8 && password.length <= 15,
+                containsLetter: /^(?=.*[a-z])(?=.*[A-Z])/.test(password),
+                containsNumber: /\d/.test(password),
+                containsSymbol: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+            };
+        })
+    }, [])
 
     return (
         <section className={styles.content}>
@@ -80,17 +90,17 @@ const SingUp: React.FC<ISingUp> = ({
                                     От 8 до 15 символов {passwordValid.validLength ? '✅' : '❌'}
                                 </li>
                                 <li className={styles.validationItem}
-                                    style={{color: passwordValid.hasUppercase && passwordValid.hasLowercase ? 'green' : 'red'}}>
+                                    style={{color: passwordValid.containsLetter  ? 'green' : 'red'}}>
                                     Строчные и прописные
-                                    буквы {passwordValid.hasUppercase && passwordValid.hasLowercase ? '✅' : '❌'}
+                                    буквы {passwordValid.containsLetter  ? '✅' : '❌'}
                                 </li>
                                 <li className={styles.validationItem}
-                                    style={{color: passwordValid.hasNumber ? 'green' : 'red'}}>
-                                    Минимум 1 цифра {passwordValid.hasNumber ? '✅' : '❌'}
+                                    style={{color: passwordValid.containsNumber ? 'green' : 'red'}}>
+                                    Минимум 1 цифра {passwordValid.containsNumber ? '✅' : '❌'}
                                 </li>
                                 <li className={styles.validationItem}
-                                    style={{color: passwordValid.hasSpecialChar ? 'green' : 'red'}}>
-                                    Минимум 1 спецсимвол (!, ", #, $...) {passwordValid.hasSpecialChar ? '✅' : '❌'}
+                                    style={{color: passwordValid.containsSymbol ? 'green' : 'red'}}>
+                                    Минимум 1 спецсимвол (!, ", #, $...) {passwordValid.containsSymbol ? '✅' : '❌'}
                                 </li>
                             </ul>
                         ) : (

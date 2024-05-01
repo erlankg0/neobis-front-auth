@@ -31,3 +31,13 @@
     text-decoration: none;
     color: #212121;
 }
+
+.forgot{
+    text-decoration: none;
+    color: #212121;
+    cursor: pointer;
+
+    font-weight: 500;
+    font-size: 1.6rem;
+    text-align: center;
+}
