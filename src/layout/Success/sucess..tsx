@@ -1,8 +1,16 @@
 import styles from './success.module.css';
+import {useEffect} from "react";
 
-const Success = () => {
+interface ISuccess {
+    setSuccess: (success: boolean) => void;
+}
+
+const Success: React.FC<ISuccess> = ({ setSuccess}) => {
+    useEffect(() => {
+        setSuccess(true)
+    });
     return (
-        <div className={styles.content}>
+        <div className={styles.center}>
             <p className={styles.title}>Выйти</p>
         </div>
     )

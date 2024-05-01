@@ -11,3 +11,10 @@
     line-height: 2.4rem;
     text-align: center;
 }
+
+.center{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+}

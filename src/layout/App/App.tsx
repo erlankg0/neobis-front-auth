@@ -8,17 +8,18 @@ import {useState} from "react";
 import Success from "../Success/sucess..tsx";
 
 function App() {
-    const [success, setSuccess] = useState<boolean>()
+    const [success, setSuccess] = useState<boolean>(false)
+
     return (
         <main>
             <div className={'container'}>
-                <div className={!success ? styles.center : styles.content}>
-                    {!success && <Intro/>}
+                <div className={success ? styles.center : styles.content}>
+                    <Intro/>
                     <Routes>
                         <Route path={'/'} element={<Login setSuccess={setSuccess}/>}/>
                         <Route path={'/register'} element={<Registration/>}/>
                         <Route path={'/email'} element={<Email/>}/>
-                        <Route path={'/success'} element={<Success/>}/>
+                        <Route path={'/success'} element={<Success setSuccess={setSuccess}/>}/>
                     </Routes>
                 </div>
             </div>

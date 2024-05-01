@@ -6,7 +6,7 @@ import styles from "./login.module.css";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {setLogin, setPassword} from './../../redux/reducer/singin.ts';
 import {NavLink, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {signIn} from "../../API/network.ts";
 
 interface ILogin {
@@ -21,8 +21,11 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
     const navigate = useNavigate();
     if (status == 200) {
         navigate('/success', {replace: true})
-        setSuccess(false);
+        setSuccess(true);
     }
+    useEffect(() => {
+        return setSuccess(false);
+    })
 
     const handleSetPassword = (password: string) => {
         dispatch(setPassword(password));
@@ -31,7 +34,6 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
     const handleSetLogin = (login: string) => {
         dispatch(setLogin(login));
     }
-
 
     return (
         <Formik
@@ -47,6 +49,7 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                 signIn(data).then(r => {
                     setStatus(r.status);
                 }).catch(e => console.log(e.response.status))
+                setSuccess(true);
             }}
         >
             {() => (
