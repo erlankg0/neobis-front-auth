@@ -12,7 +12,7 @@ function App() {
     return (
         <main>
             <div className={'container'}>
-                <div className={styles.content}>
+                <div className={!success ? styles.center : styles.content}>
                     {!success && <Intro/>}
                     <Routes>
                         <Route path={'/'} element={<Login setSuccess={setSuccess}/>}/>

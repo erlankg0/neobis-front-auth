@@ -1,14 +1,13 @@
-import {Formik, Form, Field} from "formik";
+import {Field, Form, Formik} from "formik";
 import Input from "../../components/input/input.tsx";
 import InputPassword from "../../components/inputPassword/inputPassword.tsx";
 import Button from "../../components/button/button.tsx";
 import styles from "./login.module.css";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {setPassword, setLogin} from './../../redux/reducer/singin.ts';
-import {NavLink} from "react-router-dom";
-import {singIn} from "../../API/network.ts";
+import {setLogin, setPassword} from './../../redux/reducer/singin.ts';
+import {NavLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {signIn} from "../../API/network.ts";
 
 interface ILogin {
     setSuccess: (success: boolean) => void;
@@ -16,13 +15,13 @@ interface ILogin {
 
 const Login: React.FC<ILogin> = ({setSuccess}) => {
     const dispatch = useAddDispatch();
-    const login = useAppSelector(state => state.singIn.login);
+    const username = useAppSelector(state => state.singIn.login);
     const password = useAppSelector(state => state.singIn.password);
     const [status, setStatus] = useState<number>();
     const navigate = useNavigate();
     if (status == 200) {
-        navigate('/success')
-        setSuccess(true);
+        navigate('/success', {replace: true})
+        setSuccess(false);
     }
 
     const handleSetPassword = (password: string) => {
@@ -37,11 +36,17 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
     return (
         <Formik
             initialValues={{
-                login: login,
+                login: username,
                 password: password,
             }}
             onSubmit={() => {
-                singIn(login, password).then(r => setStatus(r.status))
+                const data = {
+                    username,
+                    password,
+                }
+                signIn(data).then(r => {
+                    setStatus(r.status);
+                }).catch(e => console.log(e.response.status))
             }}
         >
             {() => (
@@ -51,7 +56,7 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                         <Field
                             as={Input}
                             type={'text'}
-                            value={login}
+                            value={username}
                             name={'login'}
                             placeholder={'Введи туда-сюда логин'}
                             onChange={handleSetLogin}

@@ -9,7 +9,9 @@ const Input: React.FC<IInput> = ({type, value, name, onChange, placeholder}) => 
             type={type}
             value={value}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => onChange(event.target.value)} name={name}
-            placeholder={placeholder}/>
+            placeholder={placeholder}
+            required
+        />
     )
 }
 
