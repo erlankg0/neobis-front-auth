@@ -8,6 +8,8 @@ import React, {useMemo, useState} from "react";
 import {ISingUp, IValid} from "./singup.ts";
 import {useNavigate} from "react-router-dom";
 import {register} from "../../API/network.ts";
+import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SingUp: React.FC<ISingUp> = ({
                                        email,
@@ -43,6 +45,36 @@ const SingUp: React.FC<ISingUp> = ({
         })
     }, [])
 
+
+    const handleSuccessToasty = (message: string) => {
+        toast(<p>{message}</p>, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            rtl: false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true,
+            type: "success"
+        })
+    }
+
+    const handleErrorToasty = (message: string) => {
+        toast(<p>{message}</p>, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            rtl: false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true,
+            type: "error"
+        })
+    }
+
+
     return (
         <section className={styles.content}>
             <Prev/>
@@ -65,7 +97,23 @@ const SingUp: React.FC<ISingUp> = ({
                         confirmPassword: confirmPassword
                     }
 
-                    register(data).then((response) => setStatus(response.status)).catch((e) => console.log(e));
+                    register(data).then((response) => {
+                        setStatus(response.status);
+                        handleSuccessToasty('Успешная регистарция');
+                    }).catch((e) => {
+                        console.log(e)
+                        switch (e.message) {
+                            case 'Request failed with status code 400':
+                                handleErrorToasty('Уже есть такой пользователь');
+                                setTimeout(()=>{
+                                    navigate('/forgot')
+                                }, 2000)
+                                break
+                            default:
+                                handleErrorToasty('Пароли не похожии !!!1');
+                                break;
+                        }
+                    });
                 }}
             >
                 {() => (
@@ -90,9 +138,9 @@ const SingUp: React.FC<ISingUp> = ({
                                     От 8 до 15 символов {passwordValid.validLength ? '✅' : '❌'}
                                 </li>
                                 <li className={styles.validationItem}
-                                    style={{color: passwordValid.containsLetter  ? 'green' : 'red'}}>
+                                    style={{color: passwordValid.containsLetter ? 'green' : 'red'}}>
                                     Строчные и прописные
-                                    буквы {passwordValid.containsLetter  ? '✅' : '❌'}
+                                    буквы {passwordValid.containsLetter ? '✅' : '❌'}
                                 </li>
                                 <li className={styles.validationItem}
                                     style={{color: passwordValid.containsNumber ? 'green' : 'red'}}>
@@ -115,7 +163,7 @@ const SingUp: React.FC<ISingUp> = ({
                     </Form>
                 )}
             </Formik>
-
+            <ToastContainer/>
         </section>
     )
 }

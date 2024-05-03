@@ -1,4 +1,12 @@
-.content{
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 7rem;
+    align-items: center;
+    padding: 10rem 0;
+}
+
+.content {
     display: flex;
     flex-direction: column;
     gap: 5rem;
@@ -9,20 +17,20 @@
     max-width: 35rem;
 }
 
-.title{
+.title {
     font-weight: 500;
     font-size: 3.2rem;
     line-height: 4.75rem;
     text-align: center;
 }
 
-.fields{
+.fields {
     display: flex;
     flex-direction: column;
     gap: 3rem;
 }
 
-.register{
+.register {
     font-weight: 500;
     font-size: 1.6rem;
     line-height: 2.4rem;
@@ -32,7 +40,7 @@
     color: #212121;
 }
 
-.forgot{
+.forgot {
     text-decoration: none;
     color: #212121;
     cursor: pointer;
@@ -40,4 +48,23 @@
     font-weight: 500;
     font-size: 1.6rem;
     text-align: center;
+}
+
+.errorBorder {
+    border: #EC0000 solid 1px;
+    border-radius: 1.2rem;
+    padding: 1.5rem 1.6rem;
+}
+
+.errorTitle {
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #EC0000;
+    text-align: center;
+}
+
+.transparent {
+    color: transparent;
+    border: transparent solid 1.2rem;
 }

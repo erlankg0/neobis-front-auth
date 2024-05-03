@@ -8,6 +8,7 @@ import {setLogin, setPassword} from './../../redux/reducer/singin.ts';
 import {NavLink, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {signIn} from "../../API/network.ts";
+import {loginError, loginStart, loginSuccess} from "../../redux/reducer/auth.ts";
 
 interface ILogin {
     setSuccess: (success: boolean) => void;
@@ -15,16 +16,22 @@ interface ILogin {
 
 const Login: React.FC<ILogin> = ({setSuccess}) => {
     const dispatch = useAddDispatch();
-    const username = useAppSelector(state => state.singIn.login);
+
+    const username = useAppSelector(state => state.singIn.username);
     const password = useAppSelector(state => state.singIn.password);
+
     const [status, setStatus] = useState<number>();
+    const [error, setError] = useState<boolean>()
+
     const navigate = useNavigate();
+
+
     if (status == 200) {
-        navigate('/success', {replace: true})
+        navigate('/success', {replace: true});
         setSuccess(true);
     }
     useEffect(() => {
-        return setSuccess(false);
+        return setSuccess(false)
     })
 
     const handleSetPassword = (password: string) => {
@@ -46,37 +53,56 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                     username,
                     password,
                 }
+                dispatch(loginStart()); // start login
+
                 signIn(data).then(r => {
+                    dispatch(loginSuccess(r.data.accessToken));
                     setStatus(r.status);
-                }).catch(e => console.log(e.response.status))
+                    setError(false);
+                }).catch(e => {
+                    dispatch(loginError(e.message))
+                    setError(true)
+                })
                 setSuccess(true);
             }}
         >
             {() => (
-                <Form className={styles.content}>
-                    <h2 className={styles.title}>Вэлком бэк!</h2>
-                    <div className={styles.fields}>
-                        <Field
-                            as={Input}
-                            type={'text'}
-                            value={username}
-                            name={'login'}
-                            placeholder={'Введи туда-сюда логин'}
-                            onChange={handleSetLogin}
-                        />
-                        <Field
-                            as={InputPassword}
-                            type={'password'}
-                            value={password}
-                            name={'password'}
-                            placeholder={'Пароль (тоже введи)'}
-                            onChange={handleSetPassword}
-                        />
-                    </div>
-                    <NavLink className={styles.forgot} to={'/forgot'}>Забыл пароль</NavLink>
-                    <Button text={'Войти'}/>
-                    <NavLink to={'/register'} className={styles.register}>У меня еще нет аккаунта</NavLink>
-                </Form>
+                <div className={styles.container}>
+                    {error ?
+                        (<div className={styles.errorBorder}>
+                            <p className={styles.errorTitle}>Неверный логин или пароль</p>
+                        </div>) :
+                        (<div className={styles.transparent}>
+                            <p className={styles.transparent}>Неверный логин или пароль</p>
+                        </div>)
+                    }
+
+                    <Form className={styles.content}>
+                        <h2 className={styles.title}>Вэлком бэк!</h2>
+                        <div className={styles.fields}>
+                            <Field
+                                as={Input}
+                                type={'text'}
+                                value={username}
+                                name={'login'}
+                                placeholder={'Введи туда-сюда логин'}
+                                onChange={handleSetLogin}
+                            />
+                            <Field
+                                as={InputPassword}
+                                type={'password'}
+                                value={password}
+                                name={'password'}
+                                placeholder={'Пароль (тоже введи)'}
+                                onChange={handleSetPassword}
+                            />
+                        </div>
+                        <NavLink className={styles.forgot} to={'/forgot'}>Забыл пароль</NavLink>
+                        <Button text={'Войти'}/>
+                        <NavLink to={'/register'} className={styles.register}>У меня еще нет аккаунта</NavLink>
+                    </Form>
+                </div>
+
             )}
         </Formik>
     )

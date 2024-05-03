@@ -1,13 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface ISingIn {
-    login: string,
+    username: string,
     password: string,
 }
 
 
 const initialState: ISingIn = {
-    login: '',
+    username: '',
     password: ''
 }
 
@@ -16,7 +16,7 @@ const singInSlice = createSlice({
     initialState,
     reducers: {
         setLogin(state, login: PayloadAction<string>) {
-            state.login = login.payload;
+            state.username = login.payload;
         },
         setPassword(state, password: PayloadAction<string>) {
             state.password = password.payload;
