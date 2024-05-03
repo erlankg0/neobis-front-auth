@@ -1,27 +1,87 @@
-import Input from "../../components/input/input.tsx";
+import React, {useCallback} from "react";
+import {ToastContainer, toast} from "react-toastify";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {setEmail} from "../../redux/reducer/singup.ts";
-import styles from './forgot.module.css';
+import {forGotPassword} from "../../API/network.ts";
+import Input from "../../components/input/input.tsx";
 import Button from "../../components/button/button.tsx";
 import Prev from "../../components/prev/prev.tsx";
+import styles from "./forgot.module.css";
+import {useNavigate} from "react-router-dom";
 
 const Forgot = () => {
-    const email = useAppSelector(state => state.singUp.email)
+    const email = useAppSelector((state) => state.singUp.email);
     const dispatch = useAddDispatch();
-    const handleChangeEmail = (email: string) => {
-        dispatch(setEmail(email));
-    }
+    const navigate = useNavigate();
+    const handleChangeEmail = useCallback(
+        (email: string) => {
+            dispatch(setEmail(email));
+        },
+        [dispatch]
+    );
+
+    const handleSuccessToast = useCallback(() => {
+        toast(<p>Успешно отправлено на э потчу{email}</p>, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            rtl: false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true,
+            type: "success",
+        });
+    }, [email]);
+
+    const handleErrorToast = useCallback(() => {
+        toast(<p>Ошибка при отправлении на э почту{email}</p>, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            rtl: false,
+            pauseOnFocusLoss: true,
+            draggable: true,
+            pauseOnHover: true,
+            type: "error",
+        });
+    }, [email]);
+
+    const handleSubmit = useCallback(
+        (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            forGotPassword(email)
+                .then(() => {
+                    handleSuccessToast();
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000)
+                })
+                .catch(() => {
+                    handleErrorToast();
+                });
+        },
+        [email, handleSuccessToast, handleErrorToast]
+    );
+
     return (
         <div className={styles.content}>
             <Prev/>
-            <div className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <h2 className={styles.title}>Восстановление аккаунта</h2>
-                <Input value={email} onChange={(e) => handleChangeEmail(e)} type={'email'}
-                       placeholder={'Веди email хы хы'} name={'email'}/>
-                <Button text={'Восстановления пароля !!1!'}></Button>
-            </div>
+                <Input
+                    value={email}
+                    onChange={(e) => handleChangeEmail(e)}
+                    type={"email"}
+                    placeholder={"Веди email хы хы"}
+                    name={"email"}
+                />
+                <Button text={"Восстановления пароля !!1!"}></Button>
+            </form>
+            <ToastContainer/>
         </div>
-    )
-}
+    );
+};
 
 export default Forgot;

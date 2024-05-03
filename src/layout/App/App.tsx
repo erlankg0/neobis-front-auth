@@ -21,6 +21,7 @@ function App() {
                     <Intro/>
                     <Routes>
                         <Route path={'/'} element={<Login setSuccess={setSuccess}/>}/>
+                        <Route path={'/forgot'} element={<Forgot/>}/>
                         <Route path={'/register'} element={<Registration/>}/>
                         <Route path={'/email'} element={<Email/>}/>
                         <Route
@@ -28,7 +29,7 @@ function App() {
                             element={JWT.accessToken ? <Success setSuccess={setSuccess}/> :
                                 <Login setSuccess={setSuccess}/>}
                         />
-                        <Route path={'/forgot'} element={<Forgot/>}/>
+
                         <Route path={'/confirmed'} element={<Confirmed setSuccess={setSuccess}/>}/>
                         <Route element={<NotFount/>}/>
                     </Routes>

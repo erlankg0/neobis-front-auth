@@ -38,6 +38,6 @@ const forGotPassword = (emailOrUserName: string) => {
     const data = {
         emailOrUsername: emailOrUserName
     }
-    instance.put('/forgot-password', data)
+    return instance.put('/forgot-password', data)
 }
 export {register, reSendEmail, signIn, refreshToken, forGotPassword};
