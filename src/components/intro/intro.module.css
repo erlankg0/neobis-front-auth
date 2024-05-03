@@ -32,3 +32,9 @@
     line-height: 4.1rem;
     text-align: center;
 }
+
+@media (max-width: 425px) {
+    .left{
+        padding: 5rem;
+    }
+}

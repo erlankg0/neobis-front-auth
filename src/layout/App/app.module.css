@@ -2,9 +2,17 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
-.center{
+
+.center {
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 425px) {
+    .content {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }

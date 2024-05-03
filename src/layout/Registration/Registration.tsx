@@ -29,15 +29,6 @@ const Registration = () => {
 
 
 
-    // const validatePassword = (password: string) => {
-    //     return {
-    //         validLength: password.length >= 8 && password.length <= 15,
-    //         hasLowercase: /[a-z]/.test(password),
-    //         hasUppercase: /[A-Z]/.test(password),
-    //         hasNumber: /\d/.test(password),
-    //         hasSpecialChar: /[!@#$%^&*]/.test(password),
-    //     };
-    // };
 
     return (<SingUp  email={email} confirmPassword={confirmPassword} password={password} username={username}
                     handleSetEmail={handleSetEmail} handleSetPassword={handleSetPassword}

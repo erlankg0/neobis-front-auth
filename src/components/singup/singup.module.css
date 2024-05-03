@@ -35,3 +35,9 @@
     line-height: 2rem;
     color: #767676;
 }
+
+@media (max-width: 425px) {
+    .content{
+        padding: 0;
+    }
+}
