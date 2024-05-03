@@ -1,7 +1,7 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import singUpSlice from './reducer/singup.ts';
 import singInSlice from './reducer/singin.ts';
-import {authSlice} from "./reducer/auth.ts";
+import authSlice from "./reducer/auth.ts";
 
 const rootReducer = combineReducers({
     singUp: singUpSlice,

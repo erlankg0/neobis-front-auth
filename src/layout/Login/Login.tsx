@@ -56,8 +56,9 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                 dispatch(loginStart()); // start login
 
                 signIn(data).then(r => {
-                    dispatch(loginSuccess(r.data.accessToken));
+                    dispatch(loginSuccess(r.data));
                     setStatus(r.status);
+                    console.log(r.data)
                     setError(false);
                 }).catch(e => {
                     dispatch(loginError(e.message))

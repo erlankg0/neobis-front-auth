@@ -27,10 +27,7 @@ const Registration = () => {
         dispatch(setConfirmPassword(confirmPassword));
     }
 
-
-
-
-    return (<SingUp  email={email} confirmPassword={confirmPassword} password={password} username={username}
+    return (<SingUp email={email} confirmPassword={confirmPassword} password={password} username={username}
                     handleSetEmail={handleSetEmail} handleSetPassword={handleSetPassword}
                     handleSetUserName={handleSetUserName} handleSetConfirmPassword={handleSetConfirmPassword}/>)
 

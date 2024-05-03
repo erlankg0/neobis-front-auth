@@ -1,5 +1,5 @@
 import styles from './success.module.css';
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useAddDispatch} from "../../redux/hooks.ts";
 import {logoutSuccess} from "../../redux/reducer/auth.ts";
 import {useNavigate} from "react-router-dom";
@@ -11,7 +11,8 @@ interface ISuccess {
 
 const Success: React.FC<ISuccess> = ({setSuccess}) => {
     useEffect(() => {
-        setSuccess(true)
+        setSuccess(true);
+
     });
 
     const navigate = useNavigate();

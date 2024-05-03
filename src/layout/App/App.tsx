@@ -7,10 +7,13 @@ import Email from "../../components/email/email.tsx";
 import {useState} from "react";
 import Success from "../Success/sucess..tsx";
 import Forgot from "../Forgot/forgot.tsx";
+import Confirmed from "../Comfirm/comfirm.tsx";
+import {useAppSelector} from "../../redux/hooks.ts";
+import NotFount from "../NotFound/404.tsx";
 
 function App() {
     const [success, setSuccess] = useState<boolean>()
-
+    const JWT = useAppSelector(state => state.auth.authData);
     return (
         <main>
             <div className={'container'}>
@@ -20,8 +23,14 @@ function App() {
                         <Route path={'/'} element={<Login setSuccess={setSuccess}/>}/>
                         <Route path={'/register'} element={<Registration/>}/>
                         <Route path={'/email'} element={<Email/>}/>
-                        <Route path={'/success'} element={<Success setSuccess={setSuccess}/>}/>
+                        <Route
+                            path={'/success'}
+                            element={JWT.accessToken ? <Success setSuccess={setSuccess}/> :
+                                <Login setSuccess={setSuccess}/>}
+                        />
                         <Route path={'/forgot'} element={<Forgot/>}/>
+                        <Route path={'/confirmed'} element={<Confirmed setSuccess={setSuccess}/>}/>
+                        <Route element={<NotFount/>}/>
                     </Routes>
                 </div>
             </div>

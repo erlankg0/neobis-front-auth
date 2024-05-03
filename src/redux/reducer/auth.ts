@@ -2,7 +2,9 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface AuthState {
     authData: {
+        username: string | null,
         accessToken: string | null,
+        refreshToken: string | null,
         isLoading: boolean,
         error: string | null,
     },
@@ -13,9 +15,17 @@ export interface AuthState {
     }
 }
 
+interface IAuthToken {
+    accessToken: string,
+    refreshToken: string | null,
+    username: string | null,
+}
+
 const initialState: AuthState = {
     authData: {
+        username: null,
         accessToken: null,
+        refreshToken: null,
         isLoading: false,
         error: null
     },
@@ -38,11 +48,13 @@ export const authSlice = createSlice({
                 isLoading: true,
             }
         }),
-        loginSuccess: (state, action: PayloadAction<string>): AuthState => ({
+        loginSuccess: (state, action: PayloadAction<IAuthToken>): AuthState => ({
             ...state,
             authData: {
                 ...state.authData,
-                accessToken: action.payload,
+                accessToken: action.payload.accessToken,
+                refreshToken: action.payload.refreshToken,
+                username: action.payload.username,
                 isLoading: false,
                 error: null
             }
@@ -53,6 +65,14 @@ export const authSlice = createSlice({
                 ...state.profileData,
                 isLoading: false,
                 error: action.payload,
+            }
+        }),
+        setRefreshToken: (state, action: PayloadAction<string>) => ({
+            ...state,
+            authData: {
+                ...state.authData,
+                refreshToken: action.payload,
+                isLoading: false
             }
         }),
         loadProfileStart: (state): AuthState => ({
@@ -88,6 +108,7 @@ export const {
     loginStart,
     loginSuccess,
     loginError,
+    setRefreshToken,
     loadProfileStart,
     loadProfileSuccess,
     loadProfileError,

@@ -8,7 +8,6 @@ const instance = axios.create({
         Accept: '*/*',
         "Content-Type": 'application/json'
     },
-    adapter: ["xhr", "http"],
 })
 
 const register = (data: IRegister): Promise<IRegisterResponse<RegisterStatus>> => {
@@ -17,13 +16,28 @@ const register = (data: IRegister): Promise<IRegisterResponse<RegisterStatus>> =
 }
 
 const reSendEmail = (email: string) => {
-    const data = { email };
+    const data = {
+        "email": email
+    }
     return instance.post('/resend-email', data);
 }
 
-const signIn = (data: ISignIn) : Promise<AxiosResponse>=> {
+const signIn = (data: ISignIn): Promise<AxiosResponse> => {
     console.log(data);
     return instance.post('/login', data);
 }
 
-export { register, reSendEmail, signIn };
+const refreshToken = (accessToken: string) => {
+    const data = {
+        accessToken
+    }
+    return instance.post('/refresh-token', data)
+}
+
+const forGotPassword = (emailOrUserName: string) => {
+    const data = {
+        emailOrUsername: emailOrUserName
+    }
+    instance.put('/forgot-password', data)
+}
+export {register, reSendEmail, signIn, refreshToken, forGotPassword};
