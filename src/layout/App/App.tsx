@@ -9,7 +9,7 @@ import Success from "../Success/sucess..tsx";
 import Forgot from "../Forgot/forgot.tsx";
 
 function App() {
-    const [success, setSuccess] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>()
 
     return (
         <main>

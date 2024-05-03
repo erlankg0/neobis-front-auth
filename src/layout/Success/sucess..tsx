@@ -24,8 +24,6 @@ const Success: React.FC<ISuccess> = ({setSuccess}) => {
         navigate('/', {replace: true})
     }
 
-
-
     return (
         <div className={styles.center}>
             <p className={styles.title} onClick={handleLogout}>Выйти</p>
