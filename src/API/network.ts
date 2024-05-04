@@ -28,10 +28,7 @@ const signIn = (data: ISignIn): Promise<AxiosResponse> => {
 }
 
 const refreshToken = (accessToken: string) => {
-    const data = {
-        accessToken
-    }
-    return instance.post('/refresh-token', data)
+    return instance.post(`/refresh-token?refreshToken=${accessToken}`)
 }
 
 const forGotPassword = (emailOrUserName: string) => {
@@ -40,4 +37,10 @@ const forGotPassword = (emailOrUserName: string) => {
     }
     return instance.put('/forgot-password', data)
 }
-export {register, reSendEmail, signIn, refreshToken, forGotPassword};
+const resetPassword = (token: string, newPassword: string, confirmNewPassword: string) => {
+    const data = {
+        newPassword, confirmNewPassword
+    }
+    return instance.put(`/reset-password?resetToken=${token}`, data);
+}
+export {register, reSendEmail, signIn, refreshToken, forGotPassword, resetPassword};

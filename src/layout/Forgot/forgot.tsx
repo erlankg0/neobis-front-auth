@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {ToastContainer, toast} from "react-toastify";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {setEmail} from "../../redux/reducer/singup.ts";
@@ -7,7 +7,7 @@ import Input from "../../components/input/input.tsx";
 import Button from "../../components/button/button.tsx";
 import Prev from "../../components/prev/prev.tsx";
 import styles from "./forgot.module.css";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 const Forgot = () => {
     const email = useAppSelector((state) => state.singUp.email);
@@ -20,6 +20,16 @@ const Forgot = () => {
         [dispatch]
     );
 
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        const token = searchParams.get('token');
+        if (token) {
+            navigate(`/resetPassword?token=${token}`)
+        } else {
+            console.log(null)
+        }
+    }, [searchParams])
     const handleSuccessToast = useCallback(() => {
         toast(<p>Успешно отправлено на э потчу{email}</p>, {
             position: "top-right",
