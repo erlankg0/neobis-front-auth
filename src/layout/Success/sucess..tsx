@@ -4,7 +4,7 @@ import {useAddDispatch} from "../../redux/hooks.ts";
 import {logoutSuccess} from "../../redux/reducer/auth.ts";
 import {useNavigate} from "react-router-dom";
 import {setLogin, setPassword} from "../../redux/reducer/singin.ts";
-import Cookies from "js-cookie";
+
 
 interface ISuccess {
     setSuccess: (success: boolean) => void;
@@ -23,7 +23,6 @@ const Success: React.FC<ISuccess> = ({setSuccess}) => {
         dispatch(logoutSuccess())
         setLogin('')
         setPassword('');
-        Cookies.remove('isLoggedIn')
         navigate('/', {replace: true})
     }
 

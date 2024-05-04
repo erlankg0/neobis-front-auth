@@ -9,7 +9,6 @@ import {NavLink, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {signIn} from "../../API/network.ts";
 import {loginError, loginStart, loginSuccess} from "../../redux/reducer/auth.ts";
-import Cookies from 'js-cookie';
 
 interface ILogin {
     setSuccess: (success: boolean) => void;
@@ -22,22 +21,16 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
     const password = useAppSelector(state => state.singIn.password);
     const [status, setStatus] = useState<number>();
     const [error, setError] = useState<boolean>()
-    const [isLoggedIn, setIsLoggendIn] = useState<boolean>(false)
     const navigate = useNavigate();
 
 
     if (status == 200) {
         navigate('/success', {replace: true});
-        if (isLoggedIn) {
-            setSuccess(true);
-        }
+        setSuccess(true);
+
     }
 
     useEffect(() => {
-        const loggedInCookie = Cookies.get('isLoggedIn');
-        if (loggedInCookie) {
-            setIsLoggendIn(true);
-        }
         return setSuccess(false);
     }, [setSuccess])
 
@@ -66,7 +59,6 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                     dispatch(loginSuccess(r.data));
                     setStatus(r.status);
                     setError(false);
-                    Cookies.set('isLoggedIn', 'true');
                 }).catch(e => {
                     dispatch(loginError(e.message))
                     setError(true)

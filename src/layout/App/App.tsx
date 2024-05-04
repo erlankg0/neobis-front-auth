@@ -4,31 +4,25 @@ import Intro from "../../components/intro/intro.tsx";
 import Registration from "../Registration/Registration.tsx";
 import styles from './app.module.css'
 import Email from "../../components/email/email.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Success from "../Success/sucess..tsx";
 import Forgot from "../Forgot/forgot.tsx";
 import Confirmed from "../Comfirm/comfirm.tsx";
 import {useAppSelector} from "../../redux/hooks.ts";
 import NotFount from "../NotFound/404.tsx";
-import Cookies from "js-cookie";
 import ResetPassword from "../ResetPassword/resetPassword.tsx";
 
 function App() {
     const [success, setSuccess] = useState<boolean>()
     const JWT = useAppSelector(state => state.auth.authData);
-    const [isLoggedIn, setIsLoggedIn] = useState<string>();
 
-    useEffect(() => {
-        if (!isLoggedIn) {
-            setIsLoggedIn(Cookies.get('isLoggedIn'))
-        }
-    }, [])
+
     return (
         <main>
             <div className={'container'}>
                 <div className={success ? styles.center : styles.content}>
                     <Intro/>
-                    {isLoggedIn == 'true' ? <Success setSuccess={setSuccess}/> : <Routes>
+                    {JWT.accessToken ? <Success setSuccess={setSuccess}/> : <Routes>
                         <Route path={'/'} element={JWT.accessToken ? <Success setSuccess={setSuccess}/> :
                             <Login setSuccess={setSuccess}/>}/>
                         <Route path={'/forgot'} element={<Forgot/>}/>
