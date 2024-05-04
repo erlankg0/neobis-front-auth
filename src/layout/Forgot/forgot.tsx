@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import {ToastContainer, toast} from "react-toastify";
 import {useAddDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {setEmail} from "../../redux/reducer/singup.ts";
+import {clear, setEmail} from "../../redux/reducer/singup.ts";
 import {forGotPassword} from "../../API/network.ts";
 import Input from "../../components/input/input.tsx";
 import Button from "../../components/button/button.tsx";
@@ -24,8 +24,8 @@ const Forgot = () => {
 
     useEffect(() => {
         const token = searchParams.get('token');
-        console.log(token)
         if (token) {
+            dispatch(clear());
             navigate(`/resetPassword?token=${token}`)
         } else {
             console.log(null)

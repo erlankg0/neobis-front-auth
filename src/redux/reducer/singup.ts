@@ -16,7 +16,6 @@ const initialState: ISingUp = {
 }
 
 
-
 const singUpSlice = createSlice({
     name: 'singUp',
     initialState,
@@ -33,8 +32,15 @@ const singUpSlice = createSlice({
         setConfirmPassword(state, action: PayloadAction<string>) {
             state.confirmPassword = action.payload;
         },
+        clear(state) {
+            state.email = '';
+            state.username = '';
+            state.password = '';
+            state.confirmPassword = '';
+        }
+
     }
 })
 
-export const {setEmail, setUserName, setPassword, setConfirmPassword} = singUpSlice.actions;
+export const {setEmail, setUserName, setPassword, setConfirmPassword, clear} = singUpSlice.actions;
 export default singUpSlice.reducer;

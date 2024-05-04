@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 import {register} from "../../API/network.ts";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {useAddDispatch} from "../../redux/hooks.ts";
+import {clear} from "../../redux/reducer/singup.ts";
 
 const SingUp: React.FC<ISingUp> = ({
                                        email,
@@ -30,7 +32,9 @@ const SingUp: React.FC<ISingUp> = ({
     });
     const [status, setStatus] = useState<number>();
     const navigate = useNavigate();
+    const dispatch = useAddDispatch();
     if (status == 201) {
+        dispatch(clear());
         navigate('/email')
     }
 
@@ -105,7 +109,7 @@ const SingUp: React.FC<ISingUp> = ({
                         switch (e.message) {
                             case 'Request failed with status code 400':
                                 handleErrorToasty('Уже есть такой пользователь');
-                                setTimeout(()=>{
+                                setTimeout(() => {
                                     navigate('/forgot')
                                 }, 2000)
                                 break

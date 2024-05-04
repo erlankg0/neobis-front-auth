@@ -9,6 +9,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {signIn} from "../../API/network.ts";
 import {loginError, loginStart, loginSuccess} from "../../redux/reducer/auth.ts";
+import {clear} from "../../redux/reducer/singup.ts";
 
 interface ILogin {
     setSuccess: (success: boolean) => void;
@@ -25,6 +26,7 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
 
 
     if (status == 200) {
+        dispatch(clear());
         navigate('/success', {replace: true});
         setSuccess(true);
 
