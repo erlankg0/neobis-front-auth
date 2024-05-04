@@ -24,12 +24,14 @@ const Forgot = () => {
 
     useEffect(() => {
         const token = searchParams.get('token');
+        console.log(token)
         if (token) {
             navigate(`/resetPassword?token=${token}`)
         } else {
             console.log(null)
         }
     }, [searchParams])
+
     const handleSuccessToast = useCallback(() => {
         toast(<p>Успешно отправлено на э потчу{email}</p>, {
             position: "top-right",
