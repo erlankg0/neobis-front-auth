@@ -61,11 +61,13 @@ const Login: React.FC<ILogin> = ({setSuccess}) => {
                     dispatch(loginSuccess(r.data));
                     setStatus(r.status);
                     setError(false);
+                    setSuccess(true);
+
                 }).catch(e => {
                     dispatch(loginError(e.message))
                     setError(true)
+                    setSuccess(false);
                 })
-                setSuccess(true);
             }}
         >
             {() => (
