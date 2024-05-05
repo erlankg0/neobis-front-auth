@@ -28,7 +28,7 @@ const Forgot = () => {
             dispatch(clear());
             navigate(`/resetPassword?token=${token}`)
         } else {
-            navigate('/')
+            console.log("");
         }
     }, [searchParams])
 
